@@ -25,7 +25,7 @@ const EditarServicio = () => {
           text: "Eliminar",
           style: "destructive",
           onPress: () => {
-            // Aquí implementarías la lógica para eliminar el servicio
+            // Aqui puedes meter la lagica para borrar el servicio Hassielito tontito
             Alert.alert("Servicio eliminado");
             navigation.goBack();
           },

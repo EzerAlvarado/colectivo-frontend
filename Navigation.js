@@ -222,20 +222,6 @@ function Mytabs() {
                 />
             )}
 
-            {userType === "empresa" && (
-                <Tab.Screen 
-                    name="RegistroServicios" 
-                    component={ServiciosScreen} 
-                    options={{
-                        tabBarLabel: 'Servicios',
-                        tabBarIcon: ({ color, size }) => (
-                            <Entypo name="add-to-list" size={24} color="#266150" />
-                        ),
-                        headerShown: false,
-                    }}
-                />
-            )}
-
             {userType === null && (
                 <Tab.Screen 
                     name="PerfilBase" 
