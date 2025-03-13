@@ -16,7 +16,7 @@ const RegistroEmpresaScreen = () => {
 
     const validarCorreo = (email) => {
         const correoLower = email.toLowerCase();
-        const regex = /^(\w+([.-]?\w+)*)@(gmail|hotmail|outlook)\.com$/;
+        const regex = /^(\w+([.-]?\w+)*)@(gmail|hotmail|outlook|yahoo)\.com$/;
         return regex.test(correoLower);
     };
 
