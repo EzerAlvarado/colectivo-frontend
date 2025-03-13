@@ -21,58 +21,47 @@ const LoginScreen = () => {
   }, []);
   
   const handleLogin = async () => {
-    //navigation.navigate("Dashboard")
-    
     if (!correo.includes('@')) {
         alert("El correo debe ser válido");
-        console.log("1")
         return;
     }
     if (contrasena.length < 6) {
         alert("La contraseña debe tener al menos 6 caracteres");
-        console.log("2")
         return;
     }
-    console.log(contrasena)
-    console.log(correo)
     try {
-        const response = await fetch('https://solobackendintegradora.onrender.com/login', {
+        const response = await fetch('https://solobackendintegradora.onrender.com/logins', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 correo: correo,
                 contrasena: contrasena,
             })
         });
-        console.log("6")
+
         const data = await response.json();
-        if (data && data[0] && data[0][0] && data[0][0].id) {
-          await AsyncStorage.setItem("userType", data[0][0].tipo.toString());
-          const tipo = "admin"
-          if (tipo == "admin") {
-            await AsyncStorage.setItem("userId", data[0][0].id.toString());
-            console.log("User id", data[0][0].id.toString())
-          }
-          const userType = await AsyncStorage.getItem("userType");
-          if(tipo == "admin"){
-            navigation.navigate("Dashboard");
-          }
-          if(tipo != "admin"){
-            console.error(error);
-            res.status(500).json({ error: "Error al modificar la empresa" });
-          }
+        console.log("Datos de la respuesta:", data); 
+
+        if (data && data.id && data.tipo) {
+            await AsyncStorage.setItem("userType", data.tipo.toString());
+            await AsyncStorage.setItem("userId", data.id.toString());
+            console.log("User id", data.id.toString());
+            if (data.tipo === "admin") {
+                navigation.navigate("Dashboard");
+            } else {
+                alert("No tienes permisos de administrador");
+            }
         } else {
-          alert("Error en las credenciales");
-          console.log("3")
+            alert("Error en las credenciales");
         }
     } catch (error) {
-      console.error("Error de conexión", error);
-      alert("Error de conexión");
-      console.log("4")
+        console.error("Error de conexión", error);
+        alert("Error de conexión");
     }
 };
+
   
   
   
@@ -107,6 +96,7 @@ const LoginScreen = () => {
           placeholder="contraseña"
           value={contrasena}
           onChangeText={setContrasena}
+          secureTextEntry={true}
         />
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Entrar</Text>

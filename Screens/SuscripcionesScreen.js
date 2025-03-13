@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, Dimensions, FlatList } from "react-native";
-import Feather from '@expo/vector-icons/Feather';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SuscripcionesScreen = ({navigation}) => {
+
+  const [InfoEmpresasna, setEmpresas] = useState([]);
   const [userId, setUserId] = useState('');
   const [userType, setuserType] = useState('');
+
+  const empresasFiltradas1 = InfoEmpresasna.filter(item => item.estado === 1);
+  const empresasFiltradas = InfoEmpresasna.filter(item => item.estado === 0);
 
   useEffect(() => {
     const loadUserId = async () => {
@@ -29,15 +33,71 @@ const SuscripcionesScreen = ({navigation}) => {
     return () => clearInterval(intervalo);
   }, []);
 
+
+  const handleAlta = async (id) => {
+    const storedUserId = await AsyncStorage.getItem("userType");
+    console.log(id)
+    console.log("E ", userType, userId)
+    try {
+      const response = await fetch('https://solobackendintegradora.onrender.com/modificarestadoemp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            empresaid: id,
+            nuevoestado: "1"
+        })
+      });
+      const data = await response.json();
+      if (data) {
+        alert("Los cambios se relejaran en breve")
+        setEmpresas((prevEmpresas) => prevEmpresas.filter((empresa) => empresa.id !== id))
+      } else {
+        console.error("La estructura de la respuesta no es la esperada.");
+      }
+    } catch (error) {
+      console.error("Error al obtener la información ", error);
+    }
+  };
+
+
+
+  const handleBaja = async (id) => {
+    console.log("baja 1")
+    const storedUserId = await AsyncStorage.getItem("userType");
+    console.log(id)
+    console.log("E ", userType, userId)
+    try {
+      const response = await fetch('https://solobackendintegradora.onrender.com/modificarestadoemp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            empresaid: id,
+            nuevoestado: "0"
+        })
+      });
+      const data = await response.json();
+      if (data) {
+        setEmpresas((prevEmpresas) => prevEmpresas.filter((empresa) => empresa.id !== id))
+      } else {
+        console.error("La estructura de la respuesta no es la esperada.");
+      }
+    } catch (error) {
+      console.error("Error al obtener la información ", error);
+    }
+  };
+
+
   useEffect(() => {
-    if (userId && userType == "admin" ) {
       const fetchInfoEmpresas = async () => {
         try {
-          const response = await fetch(`https://solobackendintegradora.onrender.com/empresasactivadas`);
+          const response = await fetch(`https://solobackendintegradora.onrender.com/empresassuscripciones`);
           const data = await response.json();
-          //console.log("Citas recibidas:", data);
-
-          if (Array.isArray(data) && Array.isArray(data[0])) {
+          console.log("Empresas Suscripciones:", data);
+          if (data && data[0] && data[0][0]) {
             setEmpresas(data[0]);
           } else {
             console.error("La estructura de la respuesta no es la esperada.");9
@@ -48,165 +108,199 @@ const SuscripcionesScreen = ({navigation}) => {
       };
   
       fetchInfoEmpresas();
-      const intervalo = setInterval(fetchInfoEmpresas, 10000);
+      const intervalo = setInterval(fetchInfoEmpresas, 5000);
   
       return () => clearInterval(intervalo);
-    }
+    
   }, [userId]);
 
-  const listas = [
-    { id: 1, suscripcion: "si", correo: "toño@gmail.com", nombre: "Barberia el Toño", Servicios: "Corte de Barba, Buzz Cut, Skin Fade, Pompadour", Direecion: "Av. Dos cuartos y 2" },
-    { id: 2, suscripcion: "no", correo: "aña@gmail.com", nombre: "Uñas con Margaritas de Aña", Servicios: "Francesa clásica, Baby Boomer, Animal Print, Marble", Direecion: "Av. Nuevo Leon y 6" },
-    { id: 3, suscripcion: "si", correo: "ninja@gmail.com", nombre: "Salon Pro Edicion 2", Servicios: "Fade, Shaggy Layers, Mohawk", Direecion: "Av. Monterrey y 4" },
-    { id: 4, suscripcion: "si", correo: "3bodys@gmail.com", nombre: "Masajes los 3 cuerpos", Servicios: "Masaje Sueco, Masaje de Tejido Profundo, Masaje Miofascial, Masaje Linfático", Direecion: "Av. Obregon y 98" },
-  ];
+  const cardWidth = Dimensions.get("window").width / 5 - 14;//modificarestadoemp
   
-  const lista = [
-    { id: 1, suscripcion: "si", correo: "toño@gmail.com", nombre: "Barberia el Toño", Servicios: "Corte de Barba, Buzz Cut, Skin Fade, Pompadour", Direccion: "Av. Dos cuartos y 2" },
-    { id: 2, suscripcion: "no", correo: "aña@gmail.com", nombre: "Uñas con Margaritas de Aña", Servicios: "Francesa clásica, Baby Boomer, Animal Print, Marble", Direccion: "Av. Nuevo Leon y 6" },
-    { id: 3, suscripcion: "si", correo: "ninja@gmail.com", nombre: "Salon Pro Edicion 2", Servicios: "Fade, Shaggy Layers, Mohawk", Direccion: "Av. Monterrey y 4" },
-    { id: 4, suscripcion: "si", correo: "3bodys@gmail.com", nombre: "Masajes los 3 cuerpos", Servicios: "Masaje Sueco, Masaje de Tejido Profundo, Masaje Miofascial, Masaje Linfático", Direccion: "Av. Obregon y 98" },
-    { id: 5, suscripcion: "si", correo: "spa@gmail.com", nombre: "Spa Relax", Servicios: "Facial, Aromaterapia, Reflexología", Direccion: "Av. Reforma y 15" },
-    { id: 6, suscripcion: "si", correo: "spa2@gmail.com", nombre: "SPA El Tiro", Servicios: "Masaje Relajante, Hidroterapia", Direccion: "Av. Central y 20" },
-    { id: 7, suscripcion: "si", correo: "ana@gmail.com", nombre: "Ana's Nails", Servicios: "Uñas Esculpidas, Manicure Japonés", Direccion: "Av. Hidalgo y 10" },
-    { id: 8, suscripcion: "si", correo: "nuclear@gmail.com", nombre: "Masajes Nucleares", Servicios: "Masaje Deportivo, Masaje Relajante", Direccion: "Av. Revolución y 25" },
-    { id: 9, suscripcion: "si", correo: "toño2@gmail.com", nombre: "Peluquería el Toño", Servicios: "Cortes Clásicos y Modernos", Direccion: "Av. Morelos y 5" },
-    { id: 10, suscripcion: "si", correo: "revivido@gmail.com", nombre: "SPA El Revivido", Servicios: "Hidratación Profunda, Baño de Vapor", Direccion: "Av. Independencia y 12" },
-    { id: 10, suscripcion: "si", correo: "revivido@gmail.com", nombre: "SPA El Revivido", Servicios: "Hidratación Profunda, Baño de Vapor", Direccion: "Av. Independencia y 12" },
-  ];
-
-  const cardWidth = Dimensions.get("window").width / 5 - 14;
-
-    const [menuVisible, setMenuVisible] = useState(false);
+  const handleDashboard = () => {
+    navigation.navigate("Dashboard")
+  };
   
-    const toggleMenu = () => setMenuVisible(!menuVisible);
-  
-    const handleDashboard = () => {
-      navigation.navigate("Dashboard")
-    };
-  
-    const handleEmpresas = () => {
+  const handleEmpresas = () => {
     navigation.navigate("Empresas")
-    };
+  };
   
-    const handleSuscripciones = () => {
-      navigation.navigate("Suscripciones")
-    };
+  const handleSuscripciones = () => {
+    navigation.navigate("Suscripciones")
+  };
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem("userId");
+      navigation.navigate("Login"); 
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Feather name="menu" size={24} color="#fff" />
+    <View style={styles.container}>
+      <View style={styles.sidebar}>
+        <TouchableOpacity onPress={handleDashboard} style={styles.menuItem1}>
+          <Text style={styles.Opciones}>Dashboard</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleEmpresas} style={styles.menuItem}>
+          <Text style={styles.Opciones}>Empresas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSuscripciones} style={styles.menuItem}>
+          <Text style={styles.Opciones}>Suscripciones</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleLogout} style={styles.menuItem}>
+          <Text style={styles.Opciones}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
 
-      {menuVisible && (
-        <View style={styles.menu}>
-          <TouchableOpacity onPress={handleDashboard} style={styles.menuItem}>
-            <Text style={styles.Opciones}>Dashboard</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleEmpresas} style={styles.menuItem}>
-            <Text style={styles.Opciones}>Empresas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleSuscripciones} style={styles.menuItem}>
-            <Text style={styles.Opciones}>Suscripciones</Text>
-          </TouchableOpacity>
+      <View style={styles.mainContainer}>
+        <View style={styles.header}>
+          <Text style={styles.title1}>Gestion de Empresas</Text>
         </View>
-      )}
-
-      <Text style={styles.title1}>Gestion de Empresas</Text>
-
-      <FlatList
-        data={lista}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={5}
-        contentContainerStyle={styles.containercartas}
-        renderItem={({ item }) => (
-          <View style={[styles.cartas, { width: cardWidth }]}>
-            <Text style={styles.title}>{item.nombre}</Text>
-            <Text style={styles.text}>Suscripción: {item.suscripcion}</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => {}} style={styles.button}>
-                <Text style={styles.buttonText}>Dar de Alta</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {}} style={[styles.button, styles.buttonRechazar]}>
-                <Text style={styles.buttonText}>Dar de Baja</Text>
-              </TouchableOpacity>
+        <ScrollView style={styles.mainContent}>
+        <Text style={styles.title2}>Empresas activas</Text>
+        {empresasFiltradas1.length > 0 && (
+        <>
+        <FlatList
+          data={empresasFiltradas1}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={4}
+          contentContainerStyle={styles.containercartas}
+          renderItem={({ item }) => (
+            <View style={[styles.cartas, { width: cardWidth }]}>
+                <Text style={styles.title}>{item.nombre}</Text>
+              <Text style={styles.text}>Suscripción: {item.estado_suscripcion}</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => handleBaja(item.id)} style={[styles.button, styles.buttonRechazar]}>
+                  <Text style={styles.buttonText}>Dar de Baja</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        )}
-      />
-    </ScrollView>
+          )}
+        />
+      </>
+    )}
+        <Text style={styles.title2}>Empresas no activas</Text>
+        {empresasFiltradas.length > 0 && (
+        <>
+        <FlatList
+          data={empresasFiltradas}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={4}
+          contentContainerStyle={styles.containercartas}
+          renderItem={({ item }) => (
+            <View style={[styles.cartas, { width: cardWidth }]}>
+              <Text style={styles.title}>{item.nombre}</Text>
+              <Text style={styles.text}>Suscripción: {item.estado_suscripcion}</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => handleAlta(item.id)} style={styles.button}>
+                  <Text style={styles.buttonText}>Dar de Alta</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        />
+      </>
+    )}
+        </ScrollView>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  menu: {
-    backgroundColor: "#fff",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-    width: "11%",
-    height: "auto"
+  containercartas: {
+    justifyContent: "center",
+    paddingHorizontal: 10,
   },
-  menuItem: {
-    fontSize: 18,
-    marginBottom: 10,
-    color: "#333",
-    width: "100%",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  Opciones: {
-    color: "Black",
+  mainContent: {
+    flex: 1,
+    padding: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: "#cbcbbe",
+    flexDirection: "row",
+    backgroundColor: "#fffdf9",
+  },
+  sidebar: {
+    width: "12%",
+    backgroundColor: "#266150",
+    padding: 20,
+    alignItems: "flex-start",
+    height: "100%",
+  },
+  menuItem: {
+    paddingVertical: 10,
+  },
+  Opciones: {
+    color: "white",
+    fontSize: 16,
+  },
+  mainContainer: {
+    flex: 1,
+  },
+  menuItem1: {
+    paddingVertical: 10,
+    marginTop: "9%",
+  },
+  header: {
+    height: 50,
+    backgroundColor: "#266150",
+    justifyContent: "center",
+    paddingLeft: 20,
+  },
+  title1: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  title2: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
   },
   containercartas: {
     justifyContent: "center",
     paddingHorizontal: 10,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
+  titleContainer: {
     backgroundColor: "#266150",
-    height: 40,
-    paddingLeft: 10,
+    padding: 5,
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 3,
+    width: "100%",
+    alignItems: "center",
+    paddingVertical: 10,
   },
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 5,
-  },
-  title1: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
+    paddingLeft: 20,
+    paddingTop: 20,
+    textAlign: "left",
+    color: "Black",
   },
   cartas: {
-    padding: 15,
     backgroundColor: "#f1f1ec",
     margin: 5,
-    borderRadius: 10,
-    alignItems: "center",
+    borderRadius: 3,
+    alignItems: "left",
     justifyContent: "space-between",
-    minHeight: 180, 
+    minHeight: 180,
   },
   text: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: "left",
     marginBottom: 5,
+    padding: 20,
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    alignItems: "center",
     width: "100%",
     marginTop: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: "#266150",
@@ -214,7 +308,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     width: "37%",
-    marginLeft: 5,
+    marginLeft: 20,
   },
   buttonRechazar: {
     backgroundColor: "#b22222",
@@ -225,4 +319,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
 export default SuscripcionesScreen;
