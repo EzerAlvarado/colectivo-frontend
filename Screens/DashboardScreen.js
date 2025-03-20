@@ -100,10 +100,11 @@ const DashboardScreen = ({navigation}) => {
 
       <View style={styles.mainContainer}>
         <View style={styles.header}>
-          <Text style={styles.title1}>Dashboard</Text>
+          <Text style={styles.title2}>StyleDate</Text>
         </View>
 
         <ScrollView style={styles.mainContent}>
+        <Text style={styles.title1}>Dashboard</Text>
           <FlatList
             data={InfoEmpresasa}
             keyExtractor={(item) => item.id.toString()}
@@ -152,6 +153,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   mainContainer: {
+    justifyContent: "center",
+    textAlign: "center",
     flex: 1,
   },
   header: {
@@ -161,7 +164,15 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   title1: {
-    color: "white",
+    color: "#a19f9d",
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 5,
+    paddingLeft: 16,
+  },
+  title2: {
+    color: "#4a8070",
+    textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
   },

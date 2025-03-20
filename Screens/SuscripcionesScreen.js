@@ -156,8 +156,9 @@ const SuscripcionesScreen = ({navigation}) => {
 
       <View style={styles.mainContainer}>
         <View style={styles.header}>
-          <Text style={styles.title1}>Gestion de Empresas</Text>
+          <Text style={styles.title3}>StyleDate</Text>
         </View>
+
         <ScrollView style={styles.mainContent}>
         <Text style={styles.title2}>Empresas activas</Text>
         {empresasFiltradas1.length > 0 && (
@@ -210,6 +211,12 @@ const SuscripcionesScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  title3: {
+    color: "#4a8070",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
   containercartas: {
     justifyContent: "center",
     paddingHorizontal: 10,
@@ -256,9 +263,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   title2: {
-    color: "black",
+    color: "#a19f9d",
     fontSize: 20,
     fontWeight: "bold",
+    padding: 5,
+    paddingLeft: 16,
   },
   containercartas: {
     justifyContent: "center",

@@ -178,10 +178,11 @@ return (
 
       <View style={styles.mainContainer}>
         <View style={styles.header}>
-          <Text style={styles.title1}>Lista de admisión</Text>
+          <Text style={styles.title2}>StyleDate</Text>
         </View>
 
         <ScrollView style={styles.mainContent}>
+          <Text style={styles.title1}>Lista de admisión</Text>
         <FlatList
           data={InfoEmpresasna}
           keyExtractor={(item) => item.id.toString()}
@@ -214,6 +215,12 @@ return (
 };
 
 const styles = StyleSheet.create({
+  title2: {
+    color: "#4a8070",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
     flexDirection: "row",
@@ -247,9 +254,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   title1: {
-    color: "white",
+    color: "#a19f9d",
     fontSize: 20,
     fontWeight: "bold",
+    padding: 5,
+    paddingLeft: 16,
   },
   mainContent: {
     flex: 1,
