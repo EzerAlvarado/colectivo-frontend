@@ -30,7 +30,20 @@ const SalonScreen = ({ route }) => {
                     } catch (error) {
                         console.error("Error al obtener la información de la empresa", error);
                     }
-                    };
+                    
+                    try {
+                        const response = await fetch(`https://solobackendintegradora.onrender.com/servicios/empresa/${id}`);
+                        const data2 = await response.json();
+                        if (data2 && data2[0] && data2[0]) {
+                            setServiciosEmpresa(data2[0]);
+                            console.log(data2[0])
+                        } else {
+                            console.error("Problema con la información de los servicios");
+                        }
+                    } catch (error) {
+                        console.error("Error al obtener la información de los servicios", error);
+                    }
+                }
                 
                 fetchInfoEmpresa();
                 const intervalo = setInterval(fetchInfoEmpresa, 3000);
