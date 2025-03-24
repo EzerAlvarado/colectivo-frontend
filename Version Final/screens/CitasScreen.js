@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from "rea
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CitasScreen = () => {//https://solobackendintegradora.onrender.com/citas/usuario/{userId}   
+const CitasScreen = () => { 
   const [userCitas, setUserCitas] = useState([]); 
 
     const [userId, setUserId] = useState('');
@@ -30,7 +30,7 @@ const CitasScreen = () => {//https://solobackendintegradora.onrender.com/citas/u
       if (userId) {
         const fetchInfoUsuario = async () => {
           try {
-            const response = await fetch(`https://solobackendintegradora.onrender.com/citas/usuario/${userId}`);
+            const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/citas/usuario/${userId}`);
             const data = await response.json();
             //console.log("Citas recibidas:", data);
             if (data && data[0] && data[0]) {
@@ -68,7 +68,7 @@ const CitasScreen = () => {//https://solobackendintegradora.onrender.com/citas/u
         text: "Sí",
         onPress: async () => {
           try {
-            const response = await fetch(`https://solobackendintegradora.onrender.com/citas/${id}/cancelar`, {
+            const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/citas/${id}/cancelar`, {
               method: "PUT",
               headers: {
                 'Content-Type': 'application/json',

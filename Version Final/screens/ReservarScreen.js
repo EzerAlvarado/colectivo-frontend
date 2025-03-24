@@ -38,7 +38,7 @@ const ReservarScreen = ({ route }) => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('https://solobackendintegradora.onrender.com/citas', {
+            const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/citas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

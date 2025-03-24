@@ -52,7 +52,7 @@ const RegistroUserScreen = () => {
         try {
             // Hacemos el POST al backend para crear el usuario
             //console.log("2")
-            const response = await fetch('https://solobackendintegradora.onrender.com/usuariosc', {
+            const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/usuariosc', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

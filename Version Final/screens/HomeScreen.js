@@ -18,7 +18,7 @@ const HomeScreen = () => {
     useEffect(() => {
         const fetchInfoEmpresas = async () => {
         try {
-            const response = await fetch(`https://solobackendintegradora.onrender.com/empresas`);
+            const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresas`);
             const data = await response.json();
             
             console.log("Empresas Recibidas", data);
@@ -30,7 +30,7 @@ const HomeScreen = () => {
                     const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
                     empresa.imagenBase64 = `data:image/jpeg;base64,${base64String}`;
                 } else {
-                  empresa.imagenBase64 = 'https://i.pinimg.com/originals/6c/bd/ee/6cbdee4d0050fff77ef812ea51a2ce4c.jpg'; // Imagen por defecto
+                    empresa.imagenBase64 = 'https://i.pinimg.com/originals/6c/bd/ee/6cbdee4d0050fff77ef812ea51a2ce4c.jpg';
                 }
                 return empresa;
                 });

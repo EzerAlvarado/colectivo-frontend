@@ -10,7 +10,7 @@ const MostrarImagen = () => {
   useEffect(() => {
     const obtenerImagen = async () => {
       try {
-        const response = await axios.get(`https://solobackendintegradora.onrender.com/imagene/14`);
+        const response = await axios.get(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/imagene/14`);
         const base64Image = response.data.image;
         setImageUri(`data:image/jpeg;base64,${base64Image}`);
       } catch (error) {

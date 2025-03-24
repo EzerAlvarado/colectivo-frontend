@@ -29,7 +29,7 @@ const PerfilEmpresaScreen = () => {
         if (empresaId) {
             const fetchInfoEmpresa = async () => {
                 try {
-                    const response = await fetch(`https://solobackendintegradora.onrender.com/empresas/${empresaId}`);
+                    const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresas/${empresaId}`);
                     const data = await response.json();
                     setempresaestado(data[0][0].estado);
                     setempresaadmicion(data[0][0].admicion);

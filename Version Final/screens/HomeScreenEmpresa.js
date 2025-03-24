@@ -25,7 +25,7 @@ const HomeLocalScreen = () => {
       try {
         const storedEmpresaId = await AsyncStorage.getItem("empresaId");
         if(storedEmpresaId){
-        const response = await axios.get(`https://solobackendintegradora.onrender.com/imagene/${storedEmpresaId}`);
+        const response = await axios.get(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/imagene/${storedEmpresaId}`);
         const base64Image = response.data.image;
         //console.log(response.data.image)
         setImageUri(`data:image/jpeg;base64,${base64Image}`);
@@ -44,7 +44,7 @@ const HomeLocalScreen = () => {
         const storedEmpresaId = await AsyncStorage.getItem("empresaId");
         console.log(storedEmpresaId)
         if(storedEmpresaId){
-        const response = await fetch(`https://solobackendintegradora.onrender.com/empresas/${storedEmpresaId}`);
+        const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresas/${storedEmpresaId}`);
         const data = await response.json();
           if (data && data[0] && data[0]) {
             setInfoEmpresa(data[0][0]);
@@ -66,7 +66,7 @@ const HomeLocalScreen = () => {
         try {
           const storedEmpresaId = await AsyncStorage.getItem("empresaId");
           if(storedEmpresaId){
-          const response = await fetch(`https://solobackendintegradora.onrender.com/servicios/empresa/${storedEmpresaId}`);//cambiar
+          const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/servicios/empresa/${storedEmpresaId}`);//cambiar
           const data = await response.json();
             if (data && data[0] && data[0]) {
               setServiciosEmpresa(data[0]);
@@ -140,7 +140,7 @@ const uploadImage = async (imageUri) => {
   const storedEmpresaId = await AsyncStorage.getItem("empresaId");
   console.log(storedEmpresaId)
   try {
-    const response = await axios.post(`https://solobackendintegradora.onrender.com/uploade/${storedEmpresaId}`, formData, {
+    const response = await axios.post(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/uploade/${storedEmpresaId}`, formData, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -176,7 +176,7 @@ const uploadImage = async (imageUri) => {
       try {
         const storedEmpresaId = await AsyncStorage.getItem("empresaId");
 
-        const response = await fetch(`https://solobackendintegradora.onrender.com/servicios`, {
+        const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/servicios`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

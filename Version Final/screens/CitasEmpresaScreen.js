@@ -27,7 +27,7 @@ const CitasEmpresaScreen = () => {
     if (empresaId) {
       const fetchInfoCitasEmpresa = async () => {
         try {
-          const response = await fetch(`https://solobackendintegradora.onrender.com/citas/empresa/${empresaId}`);
+          const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/citas/empresa/${empresaId}`);
           const data = await response.json();
           //console.log("Citas recibidas:", data);
           if (data && data[0] && data[0]) {
@@ -56,7 +56,7 @@ const CitasEmpresaScreen = () => {
         text: "Sí",
         onPress: async () => {
           try {
-            const response = await fetch(`https://solobackendintegradora.onrender.com/citas/${id}/cancelar`, {
+            const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/citas/${id}/cancelar`, {
               method: "PUT",
               headers: {
                 'Content-Type': 'application/json',

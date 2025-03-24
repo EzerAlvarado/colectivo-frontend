@@ -16,7 +16,7 @@ const SalonScreen = ({ route }) => {
             if (id) {
                 const fetchInfoEmpresa = async () => {
                     try {
-                        const response = await fetch(`https://solobackendintegradora.onrender.com/empresas/${id}`);
+                        const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresas/${id}`);
                         const data = await response.json();
                         if (data && data[0] && data[0][0]) {
                         setInfoEmpresa(data[0][0]);
@@ -32,7 +32,7 @@ const SalonScreen = ({ route }) => {
                     }
                     
                     try {
-                        const response = await fetch(`https://solobackendintegradora.onrender.com/servicios/empresa/${id}`);
+                        const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/servicios/empresa/${id}`);
                         const data2 = await response.json();
                         if (data2 && data2[0] && data2[0]) {
                             setServiciosEmpresa(data2[0]);

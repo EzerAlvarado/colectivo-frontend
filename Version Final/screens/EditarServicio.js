@@ -17,7 +17,7 @@ const EditarServicio = () => {
     try {
       const storedEmpresaId = await AsyncStorage.getItem("empresaId");
 
-      const response = await fetch(`https://solobackendintegradora.onrender.com/servicios/${idservicio}`, {
+      const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/servicios/${idservicio}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
