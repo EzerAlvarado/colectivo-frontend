@@ -36,10 +36,10 @@ const SuscripcionesScreen = ({navigation}) => {
 
   const handleAlta = async (id) => {
     const storedUserId = await AsyncStorage.getItem("userType");
-    console.log(id)
-    console.log("E ", userType, userId)
+    //console.log(id)
+    //console.log("E ", userType, userId)
     try {
-      const response = await fetch('https://solobackendintegradora.onrender.com/modificarestadoemp', {
+      const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificarestadoemp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -64,12 +64,12 @@ const SuscripcionesScreen = ({navigation}) => {
 
 
   const handleBaja = async (id) => {
-    console.log("baja 1")
+    //console.log("baja 1")
     const storedUserId = await AsyncStorage.getItem("userType");
-    console.log(id)
-    console.log("E ", userType, userId)
+    //console.log(id)
+    //console.log("E ", userType, userId)
     try {
-      const response = await fetch('https://solobackendintegradora.onrender.com/modificarestadoemp', {
+      const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificarestadoemp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -94,9 +94,9 @@ const SuscripcionesScreen = ({navigation}) => {
   useEffect(() => {
       const fetchInfoEmpresas = async () => {
         try {
-          const response = await fetch(`https://solobackendintegradora.onrender.com/empresassuscripciones`);
+          const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresassuscripciones`);
           const data = await response.json();
-          console.log("Empresas Suscripciones:", data);
+          //console.log("Empresas Suscripciones:", data);
           if (data && data[0] && data[0][0]) {
             setEmpresas(data[0]);
           } else {

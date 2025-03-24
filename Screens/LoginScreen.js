@@ -30,7 +30,7 @@ const LoginScreen = () => {
         return;
     }
     try {
-        const response = await fetch('https://solobackendintegradora.onrender.com/logins', {
+        const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/logins', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

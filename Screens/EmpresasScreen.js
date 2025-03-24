@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, FlatList, Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Buffer } from 'buffer';
 
 const EmpresasScreen = ({navigation}) => {
 
   const [InfoEmpresasna, setEmpresas] = useState([]);
+  const [InfoEmpresasnr, setEmpresas2] = useState([]);
   const [userId, setUserId] = useState('');
   const [userType, setuserType] = useState('');
+  const [imageUri, setImageUri] = useState(null);
+
+
 
   useEffect(() => {
     const loadUserId = async () => {
@@ -30,19 +35,23 @@ const EmpresasScreen = ({navigation}) => {
     return () => clearInterval(intervalo);
   }, []);
 
+  //-----------------------------------------------------------
+  //-----------------------------------------------------------
+  //-----------------------------------------------------------
+  //-----------------------------------------------------------
 
   useEffect(() => {
-    const fetchInfoEmpresas = async () => {
+    const fetchInfoEmpresasR = async () => {
       //const storedUserId = await AsyncStorage.getItem("userType");
-      console.log("E ", userType, userId)
+      //console.log("E ", userType, userId)
       try {
-        const response = await fetch(`https://solobackendintegradora.onrender.com/obtenerEmpresasRechazadas`);
-        const data = await response.json();
-        console.log("E Empresas Rechazadas", data);
-        console.log("E ",data[0])
+        const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresasrechazadas`);
+        const data2 = await response.json();
+        console.log("E Empresas Rechazadas", data2);
+        //console.log("E ",data[0])
 
-        if (data && data[0] && data[0][0]) {
-          setEmpresas(data[0]);
+        if (data2 && data2[0] && data2[0][0]) {
+          setEmpresas2(data2[0]);
         } else {
           console.error("La estructura de la respuesta no es la esperada.");
         }
@@ -50,24 +59,33 @@ const EmpresasScreen = ({navigation}) => {
         console.error("Error al obtener la información ", error);
       }
     };
-    fetchInfoEmpresas();
-    const intervalo = setInterval(fetchInfoEmpresas, 5000);
+    fetchInfoEmpresasR();
+    const intervalo = setInterval(fetchInfoEmpresasR, 5000);
 
     return () => clearInterval(intervalo);
 }, [userId]);
 
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//-----------------------------------------------------------
 
-
+/*
   useEffect(() => {
       const fetchInfoEmpresas = async () => {
         //const storedUserId = await AsyncStorage.getItem("userType");
-        console.log("E ", userType, userId)
+        //console.log("E ", userType, userId)
         try {
           const response = await fetch(`https://solobackendintegradora.onrender.com/empresasnoadm`);
           const data = await response.json();
           console.log("E Empresas NoAdm", data);
-          console.log("E ",data[0])
-
+          //console.log("E ",data[0])
+          console.log(data[0])
+          
+          //const bufferData = data[0][0].imagen.data;
+          //const uint8Array = new Uint8Array(bufferData);
+          //const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+          //setImageUri(`data:image/jpeg;base64,${base64String}`);
           if (data && data[0] && data[0][0]) {
             setEmpresas(data[0]);
           } else {
@@ -81,14 +99,50 @@ const EmpresasScreen = ({navigation}) => {
       const intervalo = setInterval(fetchInfoEmpresas, 5000);
   
       return () => clearInterval(intervalo);
-  }, [userId]);
+  }, [userId]);*/
+
+  useEffect(() => {
+    const fetchInfoEmpresas = async () => {
+    try {
+        const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresasnoadm`);
+        const data = await response.json();
+        
+        console.log("Empresas Recibidas", data);
+        if (data && data[0]) {
+            const empresasConImagen = data[0].map(empresa => {
+            if (empresa.imagen && empresa.imagen.data) {
+                const bufferData = empresa.imagen.data;
+                const base64String = Buffer.from(bufferData).toString('base64');
+                const imageType = empresa.imagen.tipo || 'jpeg'; 
+                empresa.imagenBase64 = `data:image/${imageType};base64,${base64String}`;
+            
+                console.log("Imagen Base64:", empresa.imagenBase64);
+
+            } else {
+                empresa.imagenBase64 = 'https://i.pinimg.com/originals/6c/bd/ee/6cbdee4d0050fff77ef812ea51a2ce4c.jpg';
+            }
+            return empresa;
+            });
+            console.log(empresasConImagen)
+            setEmpresas(empresasConImagen);
+        } else {
+            console.error("La estructura de la respuesta no es la esperada.");
+        }
+        } catch (error) {
+        console.error("Error al obtener la información del usuario:", error);
+        }
+    };
+    fetchInfoEmpresas();
+    const intervalo = setInterval(fetchInfoEmpresas, 30000);
+    return () => clearInterval(intervalo);
+    }, []);
 
   const handleAceptar = async (id) => {
     const storedUserId = await AsyncStorage.getItem("userType");
-    console.log(id)
-    console.log("E ", userType, userId)
+    //console.log(id)
+    //console.log("E ", userType, userId)
     try {
-      const response = await fetch('https://solobackendintegradora.onrender.com/modificaradm', {
+      const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificaradm', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -111,10 +165,10 @@ const EmpresasScreen = ({navigation}) => {
 
   const handleRechazar = async (id) => {
     const storedUserId = await AsyncStorage.getItem("userType");
-    console.log(id)
-    console.log("E ", userType, userId)
+    //console.log(id)
+    //console.log("E ", userType, userId)
     try {
-      const response = await fetch('https://solobackendintegradora.onrender.com/modificaradm', {
+      const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificaradm', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -190,7 +244,14 @@ return (
           contentContainerStyle={styles.containercartas}
           renderItem={({ item }) => (
             <View style={[styles.cartas, { width: cardWidth }]}>
-              <Image source={{ uri: "https://i.pinimg.com/originals/6c/bd/ee/6cbdee4d0050fff77ef812ea51a2ce4c.jpg" }} style={styles.cardImage} />
+
+<Image
+  source={{ uri: item.imagenBase64 }}
+  style={{ width: 265, height: 150, marginLeft: 10, marginTop: 10}}
+/>
+
+
+
               <View style={styles.containertextos}>
                 <Text style={styles.title}>{item.nombre}</Text>
                 <Text style={styles.text}>Correo: <Text style={styles.text1}>{item.correo}</Text></Text>

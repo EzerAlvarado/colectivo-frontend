@@ -12,15 +12,15 @@ const DashboardScreen = ({navigation}) => {
     const loadUserId = async () => {
         try {
             const storedUserId = await AsyncStorage.getItem("userId");
-            //const storedUserType = await AsyncStorage.getItem("userType");//Esto es necesario?
-            const storedUserType = "admin"
+            const storedUserType = await AsyncStorage.getItem("userType");//Esto es necesario?
+            //const storedUserType = "admin"
             if (storedUserId) {
               setUserId(storedUserId);
-              console.log("userid:",storedUserId)
+              //console.log("userid:",storedUserId)
             }
             if (storedUserType == "admin") {
               setuserType(storedUserType);
-              console.log("usertype: ",storedUserType)
+              //console.log("usertype: ",storedUserType)
           }
         } catch (error) {
             console.error("Error obteniendo userId", error);
@@ -38,10 +38,10 @@ const DashboardScreen = ({navigation}) => {
     if (userId && userType == "admin" ) {
       const fetchInfoEmpresasa = async () => {
         try {
-          const response = await fetch(`https://solobackendintegradora.onrender.com/empresasactivadas`);
+          const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresasactivadas`);
           const data = await response.json();
-          console.log("D Empresas activas", data);
-          console.log("D ",data[0])
+          //console.log("D Empresas activas", data);
+          //console.log("D ",data[0])
           
           if (data && data[0] && data[0][0]) {
             setEmpresas(data[0]);
