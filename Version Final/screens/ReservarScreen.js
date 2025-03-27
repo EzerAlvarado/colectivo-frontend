@@ -10,15 +10,11 @@ const ReservarScreen = ({ route }) => {
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [horarios, sethorario] = useState(null);
     const [userId, setUserId] = useState('');
     const [isLoading, setIsLoading] = useState(false); // Estado para que no haga muchas presiones en el boton @ezer 
     const today = new Date().toISOString().split("T")[0];
 
-    const horarios = [
-        "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-        "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
-        "16:00", "16:30", "17:00", "17:30", "18:00",
-    ];
 
     useEffect(() => {
         const loadUserId = async () => {
@@ -32,12 +28,13 @@ const ReservarScreen = ({ route }) => {
         loadUserId();
     }, []);
 
+
     const reservarCita = async () => {
         if (!selectedDate || !selectedTime || isLoading) return;
 
         setIsLoading(true);
 
-        try {
+        try {//http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/verhorarios
             const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/citas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -62,6 +59,30 @@ const ReservarScreen = ({ route }) => {
             setIsLoading(false); // Reactiva el botón si hay un fallo en la petición
         }
     };
+    
+
+
+
+    const horariosporfecha = async (fecha) => {
+        try {
+            console.log(fecha)
+            setSelectedDate(fecha)
+            const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/verhorarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fecha: fecha
+                }),
+            });
+            const data = await response.json();
+            console.log(data)
+            sethorario(data)
+        } catch (error) {
+            console.error("Error al obtener el horario", error);
+        }
+    };
+
+
 
     return (
         <View style={styles.container}>
@@ -71,7 +92,7 @@ const ReservarScreen = ({ route }) => {
             </View>
 
             <Calendar
-                onDayPress={(day) => setSelectedDate(day.dateString)}
+                onDayPress={(day) => horariosporfecha(day.dateString)}
                 markedDates={{ [selectedDate]: { selected: true, marked: true, selectedColor: "#266150" } }}
                 minDate={today}
                 theme={{
