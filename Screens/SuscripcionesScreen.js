@@ -171,7 +171,12 @@ const SuscripcionesScreen = ({navigation}) => {
           renderItem={({ item }) => (
             <View style={[styles.cartas, { width: cardWidth }]}>
                 <Text style={styles.title}>{item.nombre}</Text>
-              <Text style={styles.text}>Suscripción: {item.estado_suscripcion}</Text>
+              <Text style={styles.text}>Suscripción: 
+
+              {item.estado_suscripcion == 1 && (<Text> Suscrito</Text>)}
+              {item.estado_suscripcion == 0 && (<Text> No Suscrito</Text>)}
+
+          </Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => handleBaja(item.id)} style={[styles.button, styles.buttonRechazar]}>
                   <Text style={styles.buttonText}>Dar de Baja</Text>
@@ -193,7 +198,12 @@ const SuscripcionesScreen = ({navigation}) => {
           renderItem={({ item }) => (
             <View style={[styles.cartas, { width: cardWidth }]}>
               <Text style={styles.title}>{item.nombre}</Text>
-              <Text style={styles.text}>Suscripción: {item.estado_suscripcion}</Text>
+              <Text style={styles.text}>Suscripción: 
+                
+              {item.estado_suscripcion == 1 && (<Text> Suscrito</Text>)}
+              {item.estado_suscripcion == 0 && (<Text> No Suscrito</Text>)}
+
+              </Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => handleAlta(item.id)} style={styles.button}>
                   <Text style={styles.buttonText}>Dar de Alta</Text>
