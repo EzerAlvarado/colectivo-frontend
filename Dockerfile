@@ -12,7 +12,7 @@ COPY . .
 RUN npm install
 
 # Exponer el puerto en el que correrá React
-EXPOSE 3000
+EXPOSE 3006
 
 # Comando para ejecutar la aplicación
 CMD ["npm", "start"]
