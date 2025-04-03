@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   menuItemcerrarsesion: {
-    paddingVertical: "90%",
+    paddingVertical: "350%",
   },
   menuItem1: {
     paddingVertical: 10,
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1ec",
     margin: 5,
     borderRadius: 5,
+    borderColor: "#b5b5b5"
   },
   titleContainer: {
     backgroundColor: "#266150",
