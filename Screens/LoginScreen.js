@@ -86,7 +86,7 @@ const LoginScreen = () => {
         <Text style={styles.sectionTitle}>Correo</Text>
         <TextInput
           style={styles.input}
-          placeholder="corrreo"
+          placeholder="correo"
           value={correo}
           onChangeText={setCorreo}
         />
