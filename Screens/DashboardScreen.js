@@ -93,7 +93,7 @@ const DashboardScreen = ({navigation}) => {
         <TouchableOpacity onPress={handleSuscripciones} style={styles.menuItem}>
           <Text style={styles.Opciones}>Suscripciones</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogout} style={styles.menuItem}>
+        <TouchableOpacity onPress={handleLogout} style={styles.menuItemcerrarsesion}>
           <Text style={styles.Opciones}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
@@ -144,6 +144,9 @@ const styles = StyleSheet.create({
   menuItem: {
     paddingVertical: 10,
   },
+  menuItemcerrarsesion: {
+    paddingVertical: "90%",
+  },
   menuItem1: {
     paddingVertical: 10,
     marginTop: "9%",
@@ -164,7 +167,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   title1: {
-    color: "#a19f9d",
+    color: "black",
     fontSize: 20,
     fontWeight: "bold",
     padding: 5,
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
   cartas: {
     backgroundColor: "#f1f1ec",
     margin: 5,
-    borderRadius: 3,
+    borderRadius: 5,
   },
   titleContainer: {
     backgroundColor: "#266150",
