@@ -52,7 +52,7 @@ const SuscripcionesScreen = ({navigation}) => {
       });
       const data = await response.json();
       if (data) {
-        alert("Los cambios se relejaran en breve")
+        //alert("Los cambios se relejaran en breve")
         setEmpresas((prevEmpresas) => prevEmpresas.filter((empresa) => empresa.id !== id))
       } else {
         console.error("La estructura de la respuesta no es la esperada.");

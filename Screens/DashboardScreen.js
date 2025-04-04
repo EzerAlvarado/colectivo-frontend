@@ -8,6 +8,9 @@ const DashboardScreen = ({navigation}) => {
   const [userId, setUserId] = useState('');
   const [userType, setuserType] = useState('');
 
+  const screenWidth = Dimensions.get("window").width;
+  //const cardWidth = (screenWidth - 60) / 4; // Divide el ancho en 4 columnas
+
   useEffect(() => {
     const loadUserId = async () => {
         try {
@@ -103,25 +106,30 @@ const DashboardScreen = ({navigation}) => {
         </View>
         <ScrollView style={styles.mainContent}>
         <Text style={styles.title1}>Dashboard</Text>
-          <FlatList
-            data={InfoEmpresasa}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={4}
-            contentContainerStyle={styles.containercartas}
-            renderItem={({ item }) => (
-            <View style={[styles.cartas, { width: cardWidth }]}>
+
+        <FlatList
+        data={InfoEmpresasa}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={4}
+        contentContainerStyle={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "flex-start",
+          paddingLeft: 40
+        }}
+        renderItem={({ item }) => (
+          <View style={[styles.cartas, { width: cardWidth }]}>
             <View style={styles.titleContainer}>
-          <Text style={styles.title}>{item.nombre}</Text>
-        </View>
-          <View style={styles.cardContent}>
-          <Text style={styles.text}>Correo: <Text style={styles.text1}>{item.correo}</Text></Text>
-          <Text style={styles.text}>Dirección: <Text style={styles.text1}>{item.direccion}</Text></Text>
-          <Text style={styles.text}>Teléfono: <Text style={styles.text1}>{item.telefono}</Text></Text>
-        </View>
-        </View>
+              <Text style={styles.title}>{item.nombre}</Text>
+            </View>
+            <View style={styles.cardContent}>
+              <Text style={styles.text}>Correo: <Text style={styles.text1}>{item.correo}</Text></Text>
+              <Text style={styles.text}>Dirección: <Text style={styles.text1}>{item.direccion}</Text></Text>
+              <Text style={styles.text}>Teléfono: <Text style={styles.text1}>{item.telefono}</Text></Text>
+            </View>
+          </View>
         )}
       />
-
 
 
 
