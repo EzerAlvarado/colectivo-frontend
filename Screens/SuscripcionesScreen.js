@@ -46,7 +46,8 @@ const SuscripcionesScreen = ({navigation}) => {
         },
         body: JSON.stringify({
             empresaid: id,
-            nuevoestado: "1"
+            nuevoestado: "1",
+            nuevoestadosus: "1"
         })
       });
       const data = await response.json();
@@ -73,7 +74,8 @@ const SuscripcionesScreen = ({navigation}) => {
         },
         body: JSON.stringify({
             empresaid: id,
-            nuevoestado: "0"
+            nuevoestado: "0",
+            nuevoestadosus: "0"
         })
       });
       const data = await response.json();
