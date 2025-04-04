@@ -64,10 +64,7 @@ const SuscripcionesScreen = ({navigation}) => {
 
 
   const handleBaja = async (id) => {
-    //console.log("baja 1")
     const storedUserId = await AsyncStorage.getItem("userType");
-    //console.log(id)
-    //console.log("E ", userType, userId)
     try {
       const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificarestadoemp', {
         method: 'POST',
@@ -90,13 +87,53 @@ const SuscripcionesScreen = ({navigation}) => {
     }
   };
 
+  //----------------------------------------------------------
+
+  const handleEfectivo = async (id) => {
+    const storedUserId = await AsyncStorage.getItem("userType");
+    try {
+      const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificarpagoempresaefe', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            empresaid: id,
+        })
+      });
+      const data = await response.json();
+    } catch (error) {
+      console.error("Error al obtener la información ", error);
+    }
+  };
+
+
+  const handleTransferencia = async (id) => {
+    const storedUserId = await AsyncStorage.getItem("userType");
+    try {
+      const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/modificarpagoempresatran', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            empresaid: id,
+        })
+      });
+      const data = await response.json();
+    } catch (error) {
+      console.error("Error al obtener la información ", error);
+    }
+  };
+
+
 
   useEffect(() => {
       const fetchInfoEmpresas = async () => {
         try {
           const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresassuscripciones`);
           const data = await response.json();
-          //console.log("Empresas Suscripciones:", data);
+          console.log("Empresas Suscripciones:", data);
           if (data && data[0] && data[0][0]) {
             setEmpresas(data[0]);
           } else {
@@ -108,7 +145,7 @@ const SuscripcionesScreen = ({navigation}) => {
       };
   
       fetchInfoEmpresas();
-      const intervalo = setInterval(fetchInfoEmpresas, 5000);
+      const intervalo = setInterval(fetchInfoEmpresas, 3000);
   
       return () => clearInterval(intervalo);
     
@@ -144,12 +181,12 @@ const SuscripcionesScreen = ({navigation}) => {
           <Text style={styles.Opciones}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleEmpresas} style={styles.menuItem}>
-          <Text style={styles.Opciones}>Empresas</Text>
+          <Text style={styles.Opciones}>Admisión</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSuscripciones} style={styles.menuItem}>
           <Text style={styles.Opciones}>Suscripciones</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogout} style={styles.menuItem}>
+        <TouchableOpacity onPress={handleLogout} style={styles.menuItemcerrarsesion}>
           <Text style={styles.Opciones}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
@@ -171,15 +208,23 @@ const SuscripcionesScreen = ({navigation}) => {
           renderItem={({ item }) => (
             <View style={[styles.cartas, { width: cardWidth }]}>
                 <Text style={styles.title}>{item.nombre}</Text>
+
               <Text style={styles.text}>Suscripción: 
+                  {item.estado_suscripcion == 1 && (<Text> Suscrito</Text>)}
+                  {item.estado_suscripcion == 0 && (<Text> No Suscrito</Text>)}
+                </Text>
 
-              {item.estado_suscripcion == 1 && (<Text> Suscrito</Text>)}
-              {item.estado_suscripcion == 0 && (<Text> No Suscrito</Text>)}
+                <Text style={styles.text1}> Tipo de Pago: {item.tipodepago}</Text>
 
-          </Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => handleBaja(item.id)} style={[styles.button, styles.buttonRechazar]}>
                   <Text style={styles.buttonText}>Dar de Baja</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleTransferencia(item.id)} style={styles.button1}>
+                  <Text style={styles.buttonText}>T</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleEfectivo(item.id)} style={styles.button2}>
+                  <Text style={styles.buttonText}>E</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -198,11 +243,10 @@ const SuscripcionesScreen = ({navigation}) => {
           renderItem={({ item }) => (
             <View style={[styles.cartas, { width: cardWidth }]}>
               <Text style={styles.title}>{item.nombre}</Text>
+
               <Text style={styles.text}>Suscripción: 
-                
               {item.estado_suscripcion == 1 && (<Text> Suscrito</Text>)}
               {item.estado_suscripcion == 0 && (<Text> No Suscrito</Text>)}
-
               </Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => handleAlta(item.id)} style={styles.button}>
@@ -221,6 +265,58 @@ const SuscripcionesScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "#266150",
+    padding: 8,
+    borderRadius: 5,
+    alignItems: "center",
+    width: "37%",
+    marginLeft: 20,
+  },
+  button1: {
+    backgroundColor: "#ffc78d",
+    padding: 8,
+    borderRadius: 5,
+    alignItems: "center",
+    width: "15%",
+    marginLeft: 45,
+  },
+  button2: {
+    backgroundColor: "#71b78d",
+    padding: 8,
+    borderRadius: 5,
+    alignItems: "center",
+    width: "15%",
+    marginLeft: 10,
+  },
+  
+  sidebar: {
+    width: "12%",
+    backgroundColor: "#1d5141",
+    padding: 20,
+    alignItems: "flex-start",
+    height: "100%",
+  },
+  cartas: {
+    backgroundColor: "#f1f1ec",
+    margin: 5,
+    borderRadius: 15,
+    borderColor: "#b5b5b5",
+    borderWidth: 2,
+  },
+  titleContainer: {
+    backgroundColor: "#266150",
+    padding: 5,
+    borderRadius: 10,
+    width: "100%",
+    alignItems: "flex-start",
+    paddingVertical: 10,
+  },
+
+  menuItemcerrarsesion: {
+    paddingVertical: "360%",
+  },
+
   title3: {
     color: "#4a8070",
     textAlign: "center",
@@ -239,13 +335,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#fffdf9",
-  },
-  sidebar: {
-    width: "12%",
-    backgroundColor: "#266150",
-    padding: 20,
-    alignItems: "flex-start",
-    height: "100%",
   },
   menuItem: {
     paddingVertical: 10,
@@ -273,7 +362,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   title2: {
-    color: "#a19f9d",
+    color: "black",
     fontSize: 20,
     fontWeight: "bold",
     padding: 5,
@@ -283,15 +372,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 10,
   },
-  titleContainer: {
-    backgroundColor: "#266150",
-    padding: 5,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
-    width: "100%",
-    alignItems: "center",
-    paddingVertical: 10,
-  },
   title: {
     fontSize: 16,
     fontWeight: "bold",
@@ -300,19 +380,17 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: "Black",
   },
-  cartas: {
-    backgroundColor: "#f1f1ec",
-    margin: 5,
-    borderRadius: 3,
-    alignItems: "left",
-    justifyContent: "space-between",
-    minHeight: 180,
-  },
   text: {
     fontSize: 14,
     textAlign: "left",
-    marginBottom: 5,
-    padding: 20,
+    padding: 10,
+    paddingLeft: 24,
+  },
+  text1: {
+    fontSize: 14,
+    textAlign: "left",
+    padding: 10,
+    paddingLeft: 20,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -320,14 +398,6 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 10,
     marginBottom: 10,
-  },
-  button: {
-    backgroundColor: "#266150",
-    padding: 8,
-    borderRadius: 5,
-    alignItems: "center",
-    width: "37%",
-    marginLeft: 20,
   },
   buttonRechazar: {
     backgroundColor: "#b22222",

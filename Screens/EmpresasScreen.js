@@ -65,41 +65,6 @@ const EmpresasScreen = ({navigation}) => {
     return () => clearInterval(intervalo);
 }, [userId]);
 
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-//-----------------------------------------------------------
-
-/*
-  useEffect(() => {
-      const fetchInfoEmpresas = async () => {
-        //const storedUserId = await AsyncStorage.getItem("userType");
-        //console.log("E ", userType, userId)
-        try {
-          const response = await fetch(`https://solobackendintegradora.onrender.com/empresasnoadm`);
-          const data = await response.json();
-          console.log("E Empresas NoAdm", data);
-          //console.log("E ",data[0])
-          console.log(data[0])
-          
-          //const bufferData = data[0][0].imagen.data;
-          //const uint8Array = new Uint8Array(bufferData);
-          //const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
-          //setImageUri(`data:image/jpeg;base64,${base64String}`);
-          if (data && data[0] && data[0][0]) {
-            setEmpresas(data[0]);
-          } else {
-            console.error("La estructura de la respuesta no es la esperada.");
-          }
-        } catch (error) {
-          console.error("Error al obtener la información ", error);
-        }
-      };
-      fetchInfoEmpresas();
-      const intervalo = setInterval(fetchInfoEmpresas, 5000);
-  
-      return () => clearInterval(intervalo);
-  }, [userId]);*/
 
   useEffect(() => {
     const fetchInfoEmpresas = async () => {
@@ -220,12 +185,12 @@ return (
           <Text style={styles.Opciones}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleEmpresas} style={styles.menuItem}>
-          <Text style={styles.Opciones}>Empresas</Text>
+          <Text style={styles.Opciones}>Admisión</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSuscripciones} style={styles.menuItem}>
           <Text style={styles.Opciones}>Suscripciones</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogout} style={styles.menuItem}>
+        <TouchableOpacity onPress={handleLogout} style={styles.menuItemcerrarsesion}>
           <Text style={styles.Opciones}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
@@ -244,14 +209,10 @@ return (
           contentContainerStyle={styles.containercartas}
           renderItem={({ item }) => (
             <View style={[styles.cartas, { width: cardWidth }]}>
-
-<Image
-  source={{ uri: item.imagenBase64 }}
-  style={{ width: 265, height: 150, marginLeft: 10, marginTop: 10}}
-/>
-
-
-
+            <Image
+              source={{ uri: item.imagenBase64 }}
+              style={{ width: 265, height: 150, marginLeft: 10, marginTop: 10}}
+            />
               <View style={styles.containertextos}>
                 <Text style={styles.title}>{item.nombre}</Text>
                 <Text style={styles.text}>Correo: <Text style={styles.text1}>{item.correo}</Text></Text>
@@ -276,6 +237,34 @@ return (
 };
 
 const styles = StyleSheet.create({
+
+  sidebar: {
+    width: "12%",
+    backgroundColor: "#1d5141",
+    padding: 20,
+    alignItems: "flex-start",
+    height: "100%",
+  },
+  cartas: {
+    backgroundColor: "#f1f1ec",
+    margin: 5,
+    borderRadius: 15,
+    borderColor: "#b5b5b5",
+    borderWidth: 2,
+  },
+  titleContainer: {
+    backgroundColor: "#266150",
+    padding: 5,
+    borderRadius: 10,
+    width: "100%",
+    alignItems: "flex-start",
+    paddingVertical: 10,
+  },
+
+  menuItemcerrarsesion: {
+    paddingVertical: "360%",
+  },
+  
   title2: {
     color: "#4a8070",
     textAlign: "center",
@@ -286,13 +275,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#fffdf9",
-  },
-  sidebar: {
-    width: "12%",
-    backgroundColor: "#266150",
-    padding: 20,
-    alignItems: "flex-start",
-    height: "100%",
   },
   menuItem: {
     paddingVertical: 10,
@@ -315,7 +297,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   title1: {
-    color: "#a19f9d",
+    color: "black",
     fontSize: 20,
     fontWeight: "bold",
     padding: 5,
@@ -331,22 +313,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  cartas: {
-    backgroundColor: "#f1f1ec",
-    margin: 5,
-    borderRadius: 3,
-    width: "45%",
-    alignSelf: "center"//Comentar para que se ponga bien asi como para la izquierda
-  },
-  titleContainer: {
-    backgroundColor: "#266150",
-    padding: 5,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
-    width: "100%",
-    alignItems: "center",
-    paddingVertical: 10,
   },
   title: {
     fontSize: 20,

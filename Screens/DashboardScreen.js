@@ -88,7 +88,7 @@ const DashboardScreen = ({navigation}) => {
           <Text style={styles.Opciones}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleEmpresas} style={styles.menuItem}>
-          <Text style={styles.Opciones}>Empresas</Text>
+          <Text style={styles.Opciones}>Admisión</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSuscripciones} style={styles.menuItem}>
           <Text style={styles.Opciones}>Suscripciones</Text>
@@ -97,12 +97,10 @@ const DashboardScreen = ({navigation}) => {
           <Text style={styles.Opciones}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
-
       <View style={styles.mainContainer}>
         <View style={styles.header}>
           <Text style={styles.title2}>StyleDate</Text>
         </View>
-
         <ScrollView style={styles.mainContent}>
         <Text style={styles.title1}>Dashboard</Text>
           <FlatList
@@ -111,17 +109,22 @@ const DashboardScreen = ({navigation}) => {
             numColumns={4}
             contentContainerStyle={styles.containercartas}
             renderItem={({ item }) => (
-              <View style={[styles.cartas, { width: cardWidth }]}> 
-                <View style={styles.titleContainer}>
-                  <Text style={styles.title}>{item.nombre}</Text>
-                </View>
-                <Text style={styles.text}>Correo: <Text style={styles.text1}>{item.correo}</Text></Text>
-                <Text style={styles.text}>Dirección: <Text style={styles.text1}>{item.direccion}</Text></Text>
-                <Text style={styles.text}>Teléfono: <Text style={styles.text1}>{item.telefono}</Text></Text>
-                <Text style={styles.text}><Text style={styles.text1}></Text></Text>
-              </View>
-            )}
-          />
+            <View style={[styles.cartas, { width: cardWidth }]}>
+            <View style={styles.titleContainer}>
+          <Text style={styles.title}>{item.nombre}</Text>
+        </View>
+          <View style={styles.cardContent}>
+          <Text style={styles.text}>Correo: <Text style={styles.text1}>{item.correo}</Text></Text>
+          <Text style={styles.text}>Dirección: <Text style={styles.text1}>{item.direccion}</Text></Text>
+          <Text style={styles.text}>Teléfono: <Text style={styles.text1}>{item.telefono}</Text></Text>
+        </View>
+        </View>
+        )}
+      />
+
+
+
+
         </ScrollView>
       </View>
     </View>
@@ -129,23 +132,53 @@ const DashboardScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+
+  sidebar: {
+    width: "12%",
+    backgroundColor: "#1d5141",
+    padding: 20,
+    alignItems: "flex-start",
+    height: "100%",
+  },
+
+  
+  cartas: {
+    backgroundColor: "#f1f1ec",
+    margin: 5,
+    borderRadius: 15,
+    overflow: "hidden",
+    flex: 1,
+  },
+  
+  titleContainer: {
+    backgroundColor: "#266150",
+    padding: 10,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  
+  cardContent: {
+    flex: 1,
+    padding: 10,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: "#b5b5b5",
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+  
+
   container: {
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#fffdf9",
   },
-  sidebar: {
-    width: "12%",
-    backgroundColor: "#266150",
-    padding: 20,
-    alignItems: "flex-start",
-    height: "100%",
-  },
   menuItem: {
     paddingVertical: 10,
   },
   menuItemcerrarsesion: {
-    paddingVertical: "350%",
+    paddingVertical: "360%",
   },
   menuItem1: {
     paddingVertical: 10,
@@ -186,21 +219,6 @@ const styles = StyleSheet.create({
   containercartas: {
     justifyContent: "center",
     paddingHorizontal: 10,
-  },
-  cartas: {
-    backgroundColor: "#f1f1ec",
-    margin: 5,
-    borderRadius: 5,
-    borderColor: "#b5b5b5"
-  },
-  titleContainer: {
-    backgroundColor: "#266150",
-    padding: 5,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
-    width: "100%",
-    alignItems: "flex-start",
-    paddingVertical: 10,
   },
   title: {
     fontSize: 16,
