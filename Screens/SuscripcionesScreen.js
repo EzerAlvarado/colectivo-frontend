@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   button1: {
-    backgroundColor: "#ffc78d",
+    backgroundColor: "#323f58",
     padding: 1,
     borderRadius: 5,
     alignItems: "center",
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     marginLeft: 45,
   },
   button2: {
-    backgroundColor: "#71b78d",
+    backgroundColor: "#1d5141",
     padding: 1,
     borderRadius: 5,
     alignItems: "center",
