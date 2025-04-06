@@ -35,17 +35,17 @@ const LoginScreen = () => {
             }
     
             const data = await response.json();
-            console.log("Respuesta del servidor:", data); // <-- Importante para debug
+            //console.log("Respuesta del servidor:", data); // <-- Importante para debug
     
             if (data.id) { 
     
-                console.log("Usuario ID:", data.id, "Tipo:", data.tipo);
+                //console.log("Usuario ID:", data.id, "Tipo:", data.tipo);
     
                 if (data.tipo === "empresa") {
                     await AsyncStorage.setItem("userType", data.tipo.toString());
                     await AsyncStorage.setItem("empresaId", data.id.toString());
                     navigation.navigate("HomeScreen");
-                    console.log("Id: ",data.id)
+                    //console.log("Id: ",data.id)
                 } else if (data.tipo === "usuario") {
                     await AsyncStorage.setItem("userType", data.tipo.toString());
                     await AsyncStorage.setItem("userId", data.id.toString());

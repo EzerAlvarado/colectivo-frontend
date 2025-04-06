@@ -9,7 +9,7 @@ const SalonScreen = ({ route }) => {
     const [InfoEmpresa, setInfoEmpresa] = useState({});
     const [ServiciosEmpresa, setServiciosEmpresa] = useState([]);
     const { id } = route.params;
-    console.log(id)
+    //console.log(id)
     const [imageUri, setImageUri] = useState(null);
 
         useEffect(() => {
@@ -28,7 +28,7 @@ const SalonScreen = ({ route }) => {
                         console.error("Problema con la información de la empresa");
                         }
                     } catch (error) {
-                        console.error("Error al obtener la información de la empresa", error);
+                        //console.error("Error al obtener la información de la empresa", error);
                     }
                     
                     try {
@@ -36,7 +36,7 @@ const SalonScreen = ({ route }) => {
                         const data2 = await response.json();
                         if (data2 && data2[0] && data2[0]) {
                             setServiciosEmpresa(data2[0]);
-                            console.log(data2[0])
+                            //console.log(data2[0])
                         } else {
                             console.error("Problema con la información de los servicios");
                         }
@@ -54,7 +54,7 @@ const SalonScreen = ({ route }) => {
     const handleReservar = (servicio) => {
         // Navegar a la pantalla de reserva, pasando la información del servicio
         AsyncStorage.getItem("userId").then((storedUserId) => {
-            console.log(storedUserId);
+            //console.log(storedUserId);
             if(storedUserId){
                 navigation.navigate("Reserva", {
                     servicio: servicio,

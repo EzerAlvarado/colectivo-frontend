@@ -75,7 +75,7 @@ const CitasScreen = () => {
               },
             });
             const data = await response.text(); 
-            console.log("Respuesta del servidor:", data)
+            //console.log("Respuesta del servidor:", data)
             if (data) {
               setUserCitas((prevCitas) => prevCitas.filter((cita) => cita.id !== id));
             } else {
@@ -165,6 +165,7 @@ const CitasScreen = () => {
     
       },
       serviceDetails: {
+        fontWeight: "bold",
         fontSize: 16,
         color: "#000",
         marginBottom: 5,

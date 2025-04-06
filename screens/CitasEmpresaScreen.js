@@ -63,7 +63,7 @@ const CitasEmpresaScreen = () => {
               },
             });
             const data = await response.text(); 
-            console.log("Respuesta del servidor:", data)
+            //console.log("Respuesta del servidor:", data)
             if (data) {
               setEmpresaCitas((prevCitas) => prevCitas.filter((cita) => cita.id !== id));
             } else {
@@ -150,13 +150,14 @@ const styles = StyleSheet.create({
   serviceTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#033d3e",
+    color: "#000",
     marginBottom: 10,
     fontFamily: "Raleway",
   },
   serviceDetails: {
+    fontWeight: "bold", 
     fontSize: 16,
-    color: "#033d3e",
+    color: "#000",
     marginBottom: 5,
     fontFamily: "Raleway",
   },

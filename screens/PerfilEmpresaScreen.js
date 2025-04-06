@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     infoText: {
+        fontWeight: "bold",
         fontSize: 16,
         color: "#000",
         marginBottom: 10,

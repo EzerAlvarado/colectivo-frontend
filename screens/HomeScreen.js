@@ -21,7 +21,7 @@ const HomeScreen = () => {
             const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresas`);
             const data = await response.json();
             
-            console.log("Empresas Recibidas", data);
+            //console.log("Empresas Recibidas", data);
             if (data && data[0]) {
                 const empresasConImagen = data[0].map(empresa => {
                 if (empresa.imagen && empresa.imagen.data) {

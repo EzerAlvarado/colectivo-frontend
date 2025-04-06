@@ -32,7 +32,7 @@ const EditarServicio = () => {
       });
 
       const result = await response.json();
-      console.log(result);
+      //console.log(result);
       Alert.alert("Servicio actualizado", `Nombre: ${nombre}\nDuración: ${duracion}\nPrecio: ${precio}`);
       navigation.goBack();
     } catch (error) {

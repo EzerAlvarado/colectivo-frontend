@@ -65,7 +65,7 @@ const ReservarScreen = ({ route }) => {
 
     const horariosporfecha = async (fecha) => {
         try {
-            console.log(fecha)
+            //console.log(fecha)
             setSelectedDate(fecha)
             const response = await fetch('http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/verhorarios', {
                 method: 'POST',
@@ -75,7 +75,7 @@ const ReservarScreen = ({ route }) => {
                 }),
             });
             const data = await response.json();
-            console.log(data)
+            //console.log(data)
             sethorario(data)
         } catch (error) {
             console.error("Error al obtener el horario", error);

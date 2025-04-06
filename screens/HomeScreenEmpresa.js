@@ -42,7 +42,7 @@ const HomeLocalScreen = () => {
     const fetchInfoEmpresa = async () => {
       try {
         const storedEmpresaId = await AsyncStorage.getItem("empresaId");
-        console.log(storedEmpresaId)
+        //console.log(storedEmpresaId)
         if(storedEmpresaId){
         const response = await fetch(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/empresas/${storedEmpresaId}`);
         const data = await response.json();
@@ -138,7 +138,7 @@ const uploadImage = async (imageUri) => {
   const formData = new FormData();
   formData.append('image', imageUri);
   const storedEmpresaId = await AsyncStorage.getItem("empresaId");
-  console.log(storedEmpresaId)
+  //console.log(storedEmpresaId)
   try {
     const response = await axios.post(`http://bc0c84cskocsss44w8ggwgog.31.170.165.191.sslip.io/uploade/${storedEmpresaId}`, formData, {
       headers: {
@@ -146,7 +146,7 @@ const uploadImage = async (imageUri) => {
       },
     });
 
-    console.log("Respuesta del servidor:", response.data.message);
+    //console.log("Respuesta del servidor:", response.data.message);
     alert("Imagen subida con éxito");
     setUploadedImageId(response.data.id);
   } catch (error) {
