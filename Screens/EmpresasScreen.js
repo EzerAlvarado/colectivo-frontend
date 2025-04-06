@@ -211,7 +211,7 @@ return (
             <View style={[styles.cartas, { width: cardWidth }]}>
             <Image
               source={{ uri: item.imagenBase64 }}
-              style={{ width: "50%", height: 150, marginLeft: 10, marginTop: 10}}
+              style={{ width: "80%", height: 150, marginLeft: 10, marginTop: 10}}
             />
               <View style={styles.containertextos}>
                 <Text style={styles.title}>{item.nombre}</Text>
